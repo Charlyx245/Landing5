@@ -87,63 +87,15 @@
         fbq('init', '739987193778612');
         fbq('track', 'PageView');
 
-        const params = new URLSearchParams(window.location.search);
-        const payload = {};
-
-        params.forEach((value, key) => {
-            payload[key] = value;
-        });
-
-        payload.userAgent = navigator.userAgent;
-
-        async function openRandomLink() {
+        function openRandomLink() {
             const numeros = [
                 "5491176159198",
                 "5491150235081"
             ];
 
-            try {
-                // Obtener la IP del usuario
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-                payload.ip = ipData.ip;
-            } catch (error) {
-                console.error('No se pudo obtener la IP:', error);
-                payload.ip = 'unknown';
-            }
-
             const numeroElegido = numeros[Math.floor(Math.random() * numeros.length)];
-            payload.numerodestino = numeroElegido;
-            payload.op = "generaridentificador";
-
-            console.log("Payload enviado:", payload);
-
-            try {
-                const apiResponse = await fetch('https://1xpvh8ibq4.execute-api.us-east-2.amazonaws.com/dev/casino/KommoPixel/JS/0', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!apiResponse.ok) {
-                    throw new Error(`Error en la solicitud: ${apiResponse.status} ${apiResponse.statusText}`);
-                }
-
-                const data = await apiResponse.json();
-                console.log("Respuesta de la API:", data);
-
-                if (data && data.id) {
-                    const mensaje = encodeURIComponent(`ID:${data.id}\nHola, estoy interesado en el 200`);
-                    window.location.href = `https://wa.me/${numeroElegido}?text=${mensaje}`;
-                } else {
-                    throw new Error('La respuesta de la API no contiene un ID válido');
-                }
-            } catch (error) {
-                console.error('Hubo un problema con la solicitud a la API:', error);
-                alert('Lo sentimos, hubo un problema al procesar tu solicitud. Por favor, intenta de nuevo más tarde.');
-            }
+            const mensaje = encodeURIComponent(`Hola, estoy interesado en el 200`);
+            window.location.href = `https://wa.me/${numeroElegido}?text=${mensaje}`;
         }
     </script>
     <noscript>
